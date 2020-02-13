@@ -29,11 +29,14 @@ fireSound = pygame.mixer.Sound('sound.wav')
 def player(x, y):
     screen.blit(playerImg, (x, y))
 
-
+# Timer
+clock = pygame.time.Clock()
 
 # Game Loop
 running = True
 while running:
+
+    clock.tick(50)
 
     # RGB = Red, Green, Blue
     screen.fill((0, 0, 0))
