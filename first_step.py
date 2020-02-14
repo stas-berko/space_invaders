@@ -9,25 +9,26 @@ pygame.init()
 screen = pygame.display.set_mode((800, 600))
 
 # Background
-background = pygame.image.load('background0.png')
+background = pygame.image.load('assets/img/background/background0.png')
 
 # Caption and Icon
 pygame.display.set_caption("eKids project")
-icon = pygame.image.load('ufo.png')
+icon = pygame.image.load('assets/img/ufo.png')
 pygame.display.set_icon(icon)
 
 # Player
-playerImg = pygame.image.load('player0.png')
+playerImg = pygame.image.load('assets/img/player/player0.png')
 playerX = 370
 playerY = 480
 playerX_change = 0
 
 # Sound
-fireSound = pygame.mixer.Sound('sound.wav')
+fireSound = pygame.mixer.Sound('assets/sound/sound.wav')
 
 
 def player(x, y):
     screen.blit(playerImg, (x, y))
+
 
 # Timer
 clock = pygame.time.Clock()
@@ -55,7 +56,6 @@ while running:
 
             if event.key == pygame.K_SPACE:
                 fireSound.play()
-
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
