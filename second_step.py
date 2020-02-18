@@ -25,9 +25,8 @@ playerX_change = 0
 # Sound
 fireSound = pygame.mixer.Sound('assets/sound/sound.wav')
 
-
 # Step 2 - 1
-# # Bullet
+# Bullet
 # bulletImg = pygame.image.load('assets/img/bullet/bullet1.png')
 # bulletX = 0
 # bulletY = 480
@@ -40,8 +39,8 @@ def player(x, y):
 
 
 # Step 2 - 4
-# bullet_state = "fire" # I don't like it. Imho we should not use global to avoid unnecessary explanations
 # def fire_bullet(x, y):
+#     global bullet_state # I don't like it. Can not use global to avoid unnecessary explanations ?
 #     bullet_state = "fire"
 #     screen.blit(bulletImg, (x + 16, y + 10))
 
@@ -82,7 +81,7 @@ while running:
                 playerX_change = 0
 
     # Step 2 - 3
-    # # Bullet Movement
+    # Bullet Movement
     # if bulletY <= 0:
     #     bulletY = 480
     #     bullet_state = "ready"
