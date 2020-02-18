@@ -38,7 +38,7 @@ def player(x, y):
     screen.blit(playerImg, (x, y))
 
 
-# Step 2 - 4
+# Step 2 - 3
 # def fire_bullet(x, y):
 #     global bullet_state # I don't like it. Can not use global to avoid unnecessary explanations ?
 #     bullet_state = "fire"
@@ -80,7 +80,7 @@ while running:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 playerX_change = 0
 
-    # Step 2 - 3
+    # Step 2 - 4
     # Bullet Movement
     # if bulletY <= 0:
     #     bulletY = 480
