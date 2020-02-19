@@ -109,7 +109,7 @@ if __name__ == '__main__':
 
     enemies = []
 
-    for i in range(num_of_enemies):
+    for i in range(1,6):
         enemy = Enemy(screen, pygame.image.load('assets/img/enemy/enemy1.png'))
         enemy.x = random.randint(0, 736)
         enemy.y = random.randint(50, 150)
