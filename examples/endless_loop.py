@@ -30,10 +30,10 @@ def update_screen(fps=FPS):
 
 
 @contextlib.contextmanager
-def rendering():
+def rendering(fps=None):
     events_handling()
     yield
-    update_screen()
+    update_screen(fps) if fps else update_screen()
 
 
 @contextlib.contextmanager
