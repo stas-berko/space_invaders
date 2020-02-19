@@ -6,6 +6,7 @@ width, height = 640, 400
 
 
 def draw_text(text):
+    text = str(text)
     fw, fh = font.size(text)
     surface = font.render(text, True, (0, 255, 0))
     screen.blit(surface, ((width - fw) // 2, (height - fh) // 2))
@@ -45,7 +46,7 @@ def run():
 def init():
     global font, background, clock, screen
     pygame.init()
-    font = pygame.font.SysFont('mono', 45, bold=True)
+    font = pygame.font.SysFont('mono', 42, bold=True)
     screen = pygame.display.set_mode((width, height), pygame.DOUBLEBUF)  # type: pygame.Surface
     background = pygame.Surface(screen.get_size()).convert()
     clock = pygame.time.Clock()
