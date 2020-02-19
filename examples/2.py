@@ -2,8 +2,10 @@ from examples.endless_loop import draw_text, rendering, run
 
 text = "Hello!"
 #####################
+
 # text = input('Input-> ')
 #######################
+
 # num = int(input('Input num -> '))
 # text = text + 1
 ######################
