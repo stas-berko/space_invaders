@@ -1,6 +1,4 @@
 import pygame
-import random
-import math
 
 # Intialize the pygame
 pygame.init()
@@ -22,8 +20,8 @@ playerX = 370
 playerY = 480
 playerX_change = 0
 
-# Sound
-fireSound = pygame.mixer.Sound('assets/sound/sound.wav')
+# Step 2 - 1
+# Bullet
 
 def player(x, y):
     screen.blit(playerImg, (x, y))
@@ -58,11 +56,17 @@ while running:
                 playerX_change = 5
 
             if event.key == pygame.K_SPACE:
-                    fireSound.play() # replace with fire_bullet call to avoid noise )
+                # Step 2 - 2
+                # if bullet_state is "ready":
+                # Get the current x cordinate of the spaceship
+                pass
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 playerX_change = 0
+
+    # Step 2 - 3
+    # Bullet Movement
 
     playerX += playerX_change
     if playerX <= 0:
