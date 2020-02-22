@@ -37,12 +37,10 @@ fireSound = pygame.mixer.Sound('assets/sound/sound.wav')
 def player(x, y):
     screen.blit(playerImg, (x, y))
 
-
-# Step 2 - 3
-# def fire_bullet(x, y):
-#     global bullet_state # I don't like it. Can not use global to avoid unnecessary explanations ?
-#     bullet_state = "fire"
-#     screen.blit(bulletImg, (x + 16, y + 10))
+def fire_bullet(x, y):
+    global bullet_state # I don't like it. Can not use global to avoid unnecessary explanations ?
+    bullet_state = "fire"
+    screen.blit(bulletImg, (x + 16, y + 10))
 
 # Timer
 clock = pygame.time.Clock()
@@ -71,7 +69,7 @@ while running:
             if event.key == pygame.K_SPACE:
                 # Step 2 - 2
                 # if bullet_state is "ready":
-                #     # Get the current x cordinate of the spaceship
+                # Get the current x cordinate of the spaceship
                 #     bulletX = playerX
                 #     fire_bullet(bulletX, bulletY)
                     fireSound.play()
@@ -80,7 +78,7 @@ while running:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 playerX_change = 0
 
-    # Step 2 - 4
+    # Step 2 - 3
     # Bullet Movement
     # if bulletY <= 0:
     #     bulletY = 480
