@@ -9,34 +9,52 @@ pygame.init()
 screen = pygame.display.set_mode((800, 600))
 
 # Background
-background = pygame.image.load('assets/img/background/background1.png')
+background = pygame.image.load('./assets/img/background/background1.png')
 
 # Caption and Icon
 pygame.display.set_caption("eKids project")
-icon = pygame.image.load('assets/img/ufo.png')
+icon = pygame.image.load('./assets/img/ufo.png')
 pygame.display.set_icon(icon)
 
 # Player
-playerImg = pygame.image.load('assets/img/player/player1.png')
+playerImg = pygame.image.load('./assets/img/player/player1.png')
 playerX = 370
 playerY = 480
 playerX_change = 0
 
+# Enemy
+enemyImg = []
+enemyX = []
+enemyY = []
+enemyX_change = []
+enemyY_change = []
+num_of_enemies = 6
+
+for i in range(num_of_enemies):
+    enemyImg.append(pygame.image.load('./assets/img/enemy/enemy0.png'))
+    enemyX.append(random.randint(0, 736))
+    enemyY.append(random.randint(50, 150))
+    enemyX_change.append(4)
+    enemyY_change.append(40)
+
 # Sound
-fireSound = pygame.mixer.Sound('assets/sound/sound.wav')
+fireSound = pygame.mixer.Sound('./assets/sound/laser.wav')
 
 # Bullet
-bulletImg = pygame.image.load('assets/img/bullet/bullet1.png')
+bulletImg = pygame.image.load('./assets/img/bullet/bullet1.png')
 bulletX = 0
 bulletY = 480
 bulletX_change = 0
 bulletY_change = 10
 bullet_state = "ready"
 
-def player(x, y):
+def draw_player(x, y):
     screen.blit(playerImg, (x, y))
 
-def fire_bullet(x, y):
+def draw_enemy(x, y, i):
+    screen.blit(enemyImg[i], (x, y))
+
+def draw_fire_bullet(x, y):
     global bullet_state
     bullet_state = "fire"
     screen.blit(bulletImg, (x + 16, y + 10))
@@ -69,7 +87,7 @@ while running:
                 # if bullet_state is "ready":
                 # Get the current x cordinate of the spaceship
                     bulletX = playerX
-                    fire_bullet(bulletX, bulletY)
+                    draw_fire_bullet(bulletX, bulletY)
                     fireSound.play()
 
         if event.type == pygame.KEYUP:
@@ -82,7 +100,7 @@ while running:
         bullet_state = "ready"
 
     if bullet_state is "fire":
-        fire_bullet(bulletX, bulletY)
+        draw_fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change
 
     playerX += playerX_change
@@ -91,5 +109,17 @@ while running:
     elif playerX >= 736:
         playerX = 736
 
-    player(playerX, playerY)
+    for i in range(num_of_enemies):
+
+        enemyX[i] += enemyX_change[i]
+        if enemyX[i] <= 0:
+            enemyX_change[i] = 4
+            enemyY[i] += enemyY_change[i]
+        elif enemyX[i] >= 736:
+            enemyX_change[i] = -4
+            enemyY[i] += enemyY_change[i]
+
+        draw_enemy(enemyX[i], enemyY[i], i)
+
+    draw_player(playerX, playerY)
     pygame.display.update()
