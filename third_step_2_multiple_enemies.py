@@ -48,16 +48,20 @@ bulletX_change = 0
 bulletY_change = 10
 bullet_state = "ready"
 
+
 def draw_player(x, y):
     screen.blit(playerImg, (x, y))
 
+
 def draw_enemy(x, y, i):
     screen.blit(enemyImg[i], (x, y))
+
 
 def draw_fire_bullet(x, y):
     global bullet_state
     bullet_state = "fire"
     screen.blit(bulletImg, (x + 16, y + 10))
+
 
 # Timer
 clock = pygame.time.Clock()
@@ -83,12 +87,10 @@ while running:
             if event.key == pygame.K_RIGHT:
                 playerX_change = 5
 
-            if event.key == pygame.K_SPACE:
-                # if bullet_state is "ready":
-                # Get the current x cordinate of the spaceship
-                    bulletX = playerX
-                    draw_fire_bullet(bulletX, bulletY)
-                    fireSound.play()
+            if event.key == pygame.K_SPACE and bullet_state == "ready":
+                bulletX = playerX
+                draw_fire_bullet(bulletX, bulletY)
+                fireSound.play()
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:

@@ -7,24 +7,24 @@ pygame.init()
 screen = pygame.display.set_mode((800, 600))
 
 # Background
-background = pygame.image.load('assets/img/background/background1.png')
+background = pygame.image.load('../assets/img/background/background1.png')
 
 # Caption and Icon
 pygame.display.set_caption("eKids project")
-icon = pygame.image.load('assets/img/ufo.png')
+icon = pygame.image.load('../assets/img/ufo.png')
 pygame.display.set_icon(icon)
 
 # Player
-playerImg = pygame.image.load('assets/img/player/player1.png')
+playerImg = pygame.image.load('../assets/img/player/player1.png')
 playerX = 370
 playerY = 480
 playerX_change = 0
 
 # Sound
-fireSound = pygame.mixer.Sound('assets/sound/sound.wav')
+fireSound = pygame.mixer.Sound('../assets/sound/sound.wav')
 
 # Bullet
-bulletImg = pygame.image.load('assets/img/bullet/bullet1.png')
+bulletImg = pygame.image.load('../assets/img/bullet/bullet1.png')
 bulletX = 0
 bulletY = 480
 bulletX_change = 0

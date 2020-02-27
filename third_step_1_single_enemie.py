@@ -65,7 +65,7 @@ while running:
             if event.key == pygame.K_RIGHT:
                 playerX_change = 5
 
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_SPACE and bullet_state == "ready":
                 bulletX = playerX
                 draw_fire_bullet(bulletX, bulletY)
                 fireSound.play()
