@@ -1,120 +1,97 @@
 import pygame
 import random
-import math
 from sprites import Enemy, Player, Bullet
 
-# Initialize the pygame
-pygame.init()
 
-# create the screen
-screen = pygame.display.set_mode((800, 600))
-
-# Background
-background = pygame.image.load('assets/img/background/background1.png')
-endgame_screen = pygame.image.load('assets/img/background/gameover.png')
-
-# Caption and Icon
-pygame.display.set_caption("eKids project")
-pygame.display.set_icon(pygame.image.load('assets/img/ufo.png'))
-
-clock = pygame.time.Clock()
-
-# Enemy
-num_of_enemies = 6
-
-
-def isCollision(enemyX, enemyY, bulletX, bulletY):
-    distance = math.sqrt(math.pow(enemyX - bulletX, 2) + (math.pow(enemyY - bulletY, 2)))
-    return distance < 27
-
-
-def run():
+class Game:
+    player = None
+    bullet = None
+    enemies = []
     running = True
     game_over = False
-    while running:
-        clock.tick(80)
 
-        if not game_over:
-            screen.blit(background, (0, 0))
+    def __init__(self, game_name='Space Destroyer', num_of_enemies=6, FPS=60):
+        pygame.init()
+        self.background = pygame.image.load('assets/img/background/background1.png')
+        self.endgame_screen = pygame.image.load('assets/img/background/gameover.png')
+        self.clock = pygame.time.Clock()
+        self.clock.tick(FPS)
+        self.screen = pygame.display.set_mode((800, 600))
+        self.num_of_enemies = num_of_enemies
+        pygame.display.set_caption(game_name)
+        pygame.display.set_icon(pygame.image.load('assets/img/ufo.png'))
 
+    def add_player(self, player: Player):
+        self.player = player
+
+    def add_bullet(self, bullet: Bullet):
+        self.bullet = bullet
+
+    def add_enemy(self, enemy: Enemy):
+        self.enemies.append(enemy)
+
+    def check_collision(self, enemy: Enemy) -> bool:
+        return self.bullet.isCollision(enemy)
+
+    def move_sprites(self):
+        if self.player:
+            self.player.move()
+        if self.bullet:
+            self.bullet.move()
+
+        for enemy in self.enemies:
+            if enemy.move():
+                if self.check_collision(enemy):
+                    self.bullet.y = 480
+                    self.bullet.fired = False
+                    enemy.x = random.randint(0, 736)
+                    enemy.y = random.randint(50, 150)
+            else:
+                self.game_over = True
+
+    def event_handling(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                self.running = False
 
-            # if keystroke is pressed check whether its right or left
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    player.X_change = -5
+                    self.player.X_change = -5
                 if event.key == pygame.K_RIGHT:
-                    player.X_change = 5
+                    self.player.X_change = 5
                 if event.key == pygame.K_SPACE:
-                    if bullet.prepared:
-                        # Get the current x cordinate of the spaceship
-                        bullet.x = player.X
-                        bullet.move()
+                    if not self.bullet.fired:
+                        self.bullet.fired = True
+                        self.bullet.x = self.player.X
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                    player.X_change = 0
+                    self.player.X_change = 0
 
-        player.X += player.X_change
-        if player.X <= 0:
-            player.X = 0
-        elif player.X >= 736:
-            player.X = 736
+    def run(self):
 
-        for enemy in enemies:
+        while self.running:
 
-            ######## Game Over ############
-            if enemy.y > 160:
-                game_over = True
-                enemy.y = 2000
-                break
+            if self.game_over:
+                self.screen.blit(self.endgame_screen, (0, 0))
+            else:
+                self.screen.blit(self.background, (0, 0))
 
-            enemy.x += enemy.X_change
-            if enemy.x <= 0:
-                enemy.X_change = 4
-                enemy.y += enemy.Y_change
-            elif enemy.x >= 736:
-                enemy.X_change = -4
-                enemy.y += enemy.Y_change
+                self.move_sprites()
 
-            # Collision
-            collision = isCollision(enemy.x, enemy.y, bullet.x, bullet.y)
-            if collision:
-                bullet.y = 480
-                bullet.prepared = True
-                enemy.x = random.randint(0, 736)
-                enemy.y = random.randint(50, 150)
+            self.event_handling()
 
-            enemy.move()
-
-        if game_over:
-            screen.blit(endgame_screen, (0, 0))
-
-        bullet.try_reload_bullet()
-
-        if not bullet.prepared:
-            bullet.move()
-            bullet.y -= bullet.Y_change
-
-        player.move()
-
-        pygame.display.update()
+            pygame.display.update()
 
 
 if __name__ == '__main__':
-    bullet = Bullet(screen, pygame.image.load('assets/img/bullet/bullet1.png'))
-    player = Player(screen, pygame.image.load('assets/img/player/player1.png'))
 
-    enemies = []
+    game = Game()
 
-    for i in range(1,6):
-        enemy = Enemy(screen, pygame.image.load('assets/img/enemy/enemy1.png'))
-        enemy.x = random.randint(0, 736)
-        enemy.y = random.randint(50, 150)
-        enemy.X_change = 4
-        enemy.Y_change = 40
-        enemies.append(enemy)
+    game.add_player(Player(game.screen, pygame.image.load('assets/img/player/player1.png')))
+    game.add_bullet(Bullet(game.screen, pygame.image.load('assets/img/bullet/bullet1.png')))
 
-    run()
+    for i in range(game.num_of_enemies):
+        game.add_enemy(Enemy(game.screen, pygame.image.load('assets/img/enemy/enemy1.png')))
+
+    game.run()
