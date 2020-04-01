@@ -10,23 +10,23 @@ def init():
     num_of_enemies = 6
 
     screen = pygame.display.set_mode((800, 600))
-    background = pygame.image.load('../assets/img/background/background1.png')
+    background = pygame.image.load('./assets/img/background/background1.png')
     clock = pygame.time.Clock()
 
     pygame.display.set_caption("eKids project")
-    icon = pygame.image.load('../assets/img/ufo.png')
+    icon = pygame.image.load('./assets/img/ufo.png')
     pygame.display.set_icon(icon)
 
     create_player()
     create_bullet()
-    create_enemies(num_of_enemies)
+    create_enemies()
 
     run_game()
 
 
 def create_player():
     global playerImg, playerX, playerY, playerX_change
-    playerImg = pygame.image.load('../assets/img/player/player1.png')
+    playerImg = pygame.image.load('./assets/img/player/player1.png')
     playerX = 370
     playerY = 480
     playerX_change = 0
@@ -41,13 +41,20 @@ def draw_player(x, y):
     screen.blit(playerImg, (playerX, y))
 
 
-def create_enemies(): #explosionSound
+def create_enemies():
     global enemyImg, enemyX, enemyY, enemyX_change, enemyY_change
     enemyImg = pygame.image.load('./assets/img/enemy/enemy0.png')
     enemyX = random.randint(0, 736)
     enemyY = random.randint(50, 150)
     enemyX_change = 4
     enemyY_change = 40
+
+    # for i in range(enemies_count):
+    #     enemyImg.append()
+    #     enemyX.append(random.randint(0, 736))
+    #     enemyY.append(random.randint(50, 150))
+    #     enemyX_change.append(4)
+    #     enemyY_change.append(40)
 
 
 def draw_enemy(x, y):
@@ -56,8 +63,8 @@ def draw_enemy(x, y):
 
 def create_bullet():
     global fireSound, bulletImg, bulletX, bulletY, bulletX_change, bulletY_change, bullet_state
-    fireSound = pygame.mixer.Sound('../assets/sound/laser.wav')
-    bulletImg = pygame.image.load('../assets/img/bullet/bullet1.png')
+    fireSound = pygame.mixer.Sound('./assets/sound/laser.wav')
+    bulletImg = pygame.image.load('./assets/img/bullet/bullet1.png')
     bulletX = 0
     bulletY = 480
     bulletX_change = 0
@@ -95,7 +102,7 @@ def event_handling():
 
 
 def run_game():
-    global bulletY, bullet_state, playerX, running
+    global bulletY, bullet_state, playerX, running, enemyX, enemyX_change, enemyY, enemyY_change
     running = True
     while running:
 
