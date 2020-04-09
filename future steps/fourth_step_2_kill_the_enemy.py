@@ -143,14 +143,12 @@ def run_game():
 
             # Collision
             collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
-            if collision:
+            if (collision):
                 explosionSound.play()
                 bulletY = 480
                 bullet_state = "ready"
                 enemyX[i] = random.randint(0, 736)
                 enemyY[i] = random.randint(50, 150)
-
-            # enemy(enemyX[i], enemyY[i], i)
 
             draw_enemy(enemyX[i], enemyY[i], i)
 

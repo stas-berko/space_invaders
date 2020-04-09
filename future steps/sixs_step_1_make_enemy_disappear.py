@@ -4,17 +4,19 @@ import math
 
 
 def init():
-    global screen, background, clock, num_of_enemies
+    global screen, background, clock, num_of_enemies, enemy_alive, enemy_dead
 
     pygame.init()
     num_of_enemies = 6
+    enemy_alive = "enemy_alive"
+    enemy_dead = "enemy_dead"
 
     screen = pygame.display.set_mode((800, 600))
-    background = pygame.image.load('./assets/img/background/background1.png')
+    background = pygame.image.load('../assets/img/background/background1.png')
     clock = pygame.time.Clock()
 
     pygame.display.set_caption("eKids project")
-    icon = pygame.image.load('./assets/img/ufo.png')
+    icon = pygame.image.load('../assets/img/ufo.png')
     pygame.display.set_icon(icon)
 
     create_player()
@@ -26,7 +28,7 @@ def init():
 
 def create_player():
     global playerImg, playerX, playerY, playerX_change
-    playerImg = pygame.image.load('./assets/img/player/player1.png')
+    playerImg = pygame.image.load('../assets/img/player/player1.png')
     playerX = 370
     playerY = 480
     playerX_change = 0
@@ -42,19 +44,21 @@ def draw_player(x, y):
 
 
 def create_enemies(enemies_count):
-    global enemyImg, enemyX, enemyY, enemyX_change, enemyY_change
+    global enemyImg, enemyX, enemyY, enemyX_change, enemyY_change, enemy_state
     enemyImg = []
     enemyX = []
     enemyY = []
     enemyX_change = []
     enemyY_change = []
+    enemy_state = []
 
     for i in range(enemies_count):
-        enemyImg.append(pygame.image.load('./assets/img/enemy/enemy0.png'))
+        enemyImg.append(pygame.image.load('../assets/img/enemy/enemy0.png'))
         enemyX.append(random.randint(0, 736))
         enemyY.append(random.randint(50, 150))
         enemyX_change.append(4)
         enemyY_change.append(40)
+        enemy_state.append(enemy_alive)
 
 
 def draw_enemy(x, y, i):
@@ -63,9 +67,9 @@ def draw_enemy(x, y, i):
 
 def create_bullet():
     global fireSound, explosionSound, bulletImg, bulletX, bulletY, bulletX_change, bulletY_change, bullet_state
-    fireSound = pygame.mixer.Sound('./assets/sound/laser.wav')
-    explosionSound = pygame.mixer.Sound('./assets/sound/explosion.wav')
-    bulletImg = pygame.image.load('./assets/img/bullet/bullet1.png')
+    fireSound = pygame.mixer.Sound('../assets/sound/laser.wav')
+    explosionSound = pygame.mixer.Sound('../assets/sound/explosion.wav')
+    bulletImg = pygame.image.load('../assets/img/bullet/bullet1.png')
     bulletX = 0
     bulletY = 480
     bulletX_change = 0
@@ -147,11 +151,12 @@ def run_game():
                 explosionSound.play()
                 bulletY = 480
                 bullet_state = "ready"
+                enemy_state[i] = enemy_dead
                 enemyX[i] = random.randint(0, 736)
                 enemyY[i] = random.randint(50, 150)
 
-
-            draw_enemy(enemyX[i], enemyY[i], i)
+            if (enemy_state[i] == enemy_alive):
+                draw_enemy(enemyX[i], enemyY[i], i)
 
         pygame.display.update()
 

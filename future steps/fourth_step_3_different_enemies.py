@@ -10,11 +10,11 @@ def init():
     num_of_enemies = 6
 
     screen = pygame.display.set_mode((800, 600))
-    background = pygame.image.load('./assets/img/background/background1.png')
+    background = pygame.image.load('../assets/img/background/background1.png')
     clock = pygame.time.Clock()
 
     pygame.display.set_caption("eKids project")
-    icon = pygame.image.load('./assets/img/ufo.png')
+    icon = pygame.image.load('../assets/img/ufo.png')
     pygame.display.set_icon(icon)
 
     create_player()
@@ -26,7 +26,7 @@ def init():
 
 def create_player():
     global playerImg, playerX, playerY, playerX_change
-    playerImg = pygame.image.load('./assets/img/player/player1.png')
+    playerImg = pygame.image.load('../assets/img/player/player1.png')
     playerX = 370
     playerY = 480
     playerX_change = 0
@@ -50,7 +50,7 @@ def create_enemies(enemies_count):
     enemyY_change = []
 
     for i in range(enemies_count):
-        enemyImg.append(pygame.image.load('./assets/img/enemy/enemy0.png'))
+        enemyImg.append(pygame.image.load('../assets/img/enemy/enemy'+ str(i) + '.png'))
         enemyX.append(random.randint(0, 736))
         enemyY.append(random.randint(50, 150))
         enemyX_change.append(4)
@@ -63,9 +63,9 @@ def draw_enemy(x, y, i):
 
 def create_bullet():
     global fireSound, explosionSound, bulletImg, bulletX, bulletY, bulletX_change, bulletY_change, bullet_state
-    fireSound = pygame.mixer.Sound('./assets/sound/laser.wav')
-    explosionSound = pygame.mixer.Sound('./assets/sound/explosion.wav')
-    bulletImg = pygame.image.load('./assets/img/bullet/bullet1.png')
+    fireSound = pygame.mixer.Sound('../assets/sound/laser.wav')
+    explosionSound = pygame.mixer.Sound('../assets/sound/explosion.wav')
+    bulletImg = pygame.image.load('../assets/img/bullet/bullet1.png')
     bulletX = 0
     bulletY = 480
     bulletX_change = 0
@@ -100,13 +100,13 @@ def event_handling():
             if event.key == pygame.K_RIGHT:
                 playerX_change = 5
 
-            if (event.key == pygame.K_SPACE) and (bullet_state == "ready"):
+            if event.key == pygame.K_SPACE and bullet_state == "ready":
                 bulletX = playerX
                 draw_fire_bullet(bulletX, bulletY)
                 fireSound.play()
 
         if event.type == pygame.KEYUP:
-            if (event.key == pygame.K_LEFT) or (event.key == pygame.K_RIGHT):
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 playerX_change = 0
 
 
@@ -143,13 +143,14 @@ def run_game():
 
             # Collision
             collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
-            if (collision):
+            if collision:
                 explosionSound.play()
                 bulletY = 480
                 bullet_state = "ready"
                 enemyX[i] = random.randint(0, 736)
                 enemyY[i] = random.randint(50, 150)
 
+            # enemy(enemyX[i], enemyY[i], i)
 
             draw_enemy(enemyX[i], enemyY[i], i)
 
