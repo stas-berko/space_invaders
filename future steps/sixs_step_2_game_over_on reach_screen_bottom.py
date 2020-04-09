@@ -135,10 +135,11 @@ def run_game():
         playerX += playerX_change
         draw_player(playerX, playerY)
 
-        for i in range(num_of_enemies):
+        if (max(enemyY) > 420):
+            print("You lost")
+            running = False
 
-            if (isCollision(enemyX[i], enemyY[i], playerX, playerY, 40)):
-                running = False
+        for i in range(num_of_enemies):
 
             enemyX[i] += enemyX_change[i]
             if enemyX[i] <= 0:
