@@ -4,7 +4,8 @@ import math
 
 
 def finalize(message):
-    clock.tick(50)
+    background = pygame.image.load('../assets/img/background/gameover.png')
+
     screen.blit(background, (0, 0))
 
     f1 = pygame.font.Font(None, 200)
@@ -13,11 +14,11 @@ def finalize(message):
     pygame.display.update()
 
     while True:
+        clock.tick(50)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
 
-                # if keystroke is pressed check whether its right or left
             if event.type == pygame.KEYDOWN:
                 exit()
 
@@ -83,7 +84,7 @@ def create_enemies(enemies_count):
     enemy_state = []
 
     for i in range(enemies_count):
-        enemyImg.append(pygame.image.load('../assets/img/enemy/enemy0.png'))
+        enemyImg.append(pygame.image.load('../assets/img/enemy/enemy' + str(i) + '.png'))
         enemyX.append(random.randint(0, 736))
         enemyY.append(random.randint(50, 150))
         enemyX_change.append(4)
